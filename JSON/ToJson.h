@@ -90,7 +90,14 @@ private:
 				continue;
 			}
 
-			result.addMember(it->first, obj->getValue().toStdString());
+            switch ( obj->getValue().type() ) {
+                case Slang::Runtime::AtomicValue::Type::BOOL:   result.addMember( it->first, obj->getValue().toBool() ); break;
+                case Slang::Runtime::AtomicValue::Type::DOUBLE: result.addMember( it->first, obj->getValue().toDouble() ); break;
+                case Slang::Runtime::AtomicValue::Type::FLOAT:  result.addMember( it->first, obj->getValue().toFloat() ); break;
+                case Slang::Runtime::AtomicValue::Type::INT:    result.addMember( it->first, obj->getValue().toInt() ); break;
+                case Slang::Runtime::AtomicValue::Type::STRING: result.addMember( it->first, obj->getValue().toStdString() ); break;
+                default: result.addMember( it->first, obj->getValue().toStdString() ); break;
+            }
 		}
 	}
 };

@@ -28,7 +28,7 @@ private bool TestCase1() const {
 	baseObject.mIntValue = 173;
 
 	string jsonString = ToJsonString(baseObject);
-	writeln("jsonString = " + jsonString);
+	print("jsonString = " + jsonString);
 
 	bool result = FromJsonString(baseObject, jsonString);
 	return result && baseObject.mIntValue == 173;
@@ -42,7 +42,7 @@ private bool TestCase2() const {
 	derived.mStringValue = "this is a string";
 
 	string jsonString = ToJsonString(derived);
-	writeln("jsonString = " + jsonString);
+	print("jsonString = " + jsonString);
 
 	bool result = FromJsonString(derived, jsonString);
 	return result && derived.mIntValue == 42;

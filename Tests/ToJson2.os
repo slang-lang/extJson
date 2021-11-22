@@ -46,63 +46,63 @@ public void Main(int argc, string argv) {
 }
 
 private bool TestCase1() const {
-	writeln("TestCase 1");
+	print("TestCase 1");
 
 	Test_ToJson();
 	Test_FromJson();
 
-	writeln("");
+	print("");
 
 	return true;
 }
 
 private bool TestCase2() const {
-	writeln("TestCase 2");
+	print("TestCase 2");
 
 	TestObject test = new TestObject("MeinName", 1731389);
 
 	string json = ToJsonString(test);
-	writeln("json = " + json);
+	print("json = " + json);
 
 	TestObject obj2 = new TestObject();
 	FromJsonString(obj2, json);
 
-	writeln("obj2={" + obj2.mName + "," + obj2.mType + "}");
+	print("obj2={" + obj2.mName + "," + obj2.mType + "}");
 
-	writeln("");
+	print("");
 
 	return true;
 }
 
 private bool TestCase3() const {
-	writeln("TestCase 3");
+	print("TestCase 3");
 
 	Exception ex = new Exception("this is an exception");
 
-	writeln(ToJsonString(ex));
+	print(ToJsonString(ex));
 
 	System.IO.File file = new System.IO.File();
-	writeln(ToJsonString(file));
+	print(ToJsonString(file));
 
-	writeln("");
+	print("");
 
 	return true;
 }
 
 private bool TestCase4() const {
-	writeln("TestCase 4");
+	print("TestCase 4");
 
 	DerivedObject derived = new DerivedObject("derived", 173, true);
 
 	string json = ToJsonString(derived);
-	writeln("json = " + json);
+	print("json = " + json);
 
 	DerivedObject generated = new DerivedObject();
 	FromJsonString(generated, json);
 
-	writeln("generated={" + generated.mName + "," + generated.mType + "," + generated.mFlag + "}");
+	print("generated={" + generated.mName + "," + generated.mType + "," + generated.mFlag + "}");
 
-	writeln("");
+	print("");
 
 	return true;
 }
@@ -111,7 +111,7 @@ private bool Test_FromJson() const {
 	TestObject obj = new TestObject();
 	FromJsonString(obj, "{ \"mName\": \"test\" }");
 
-	writeln("obj={" + obj.mName + "," + obj.mType + "}");
+	print("obj={" + obj.mName + "," + obj.mType + "}");
 
 	return true;
 }
@@ -119,7 +119,7 @@ private bool Test_FromJson() const {
 private bool Test_ToJson() const {
 	TestObject obj = new TestObject("test", 17);
 
-	writeln("ToJson(obj) = " + ToJsonString(obj));
+	print("ToJson(obj) = " + ToJsonString(obj));
 
 	return true;
 }

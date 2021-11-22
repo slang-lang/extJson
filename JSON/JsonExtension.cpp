@@ -15,7 +15,7 @@ namespace Json {
 
 
 JsonExtension::JsonExtension()
-: AExtension( "Json", "0.0.1")
+: AExtension( "Json", "0.1.0")
 {
 }
 
