@@ -1,15 +1,11 @@
 #!/usr/local/bin/slang
 
 private object BaseObject {
-	public int mIntValue;
-
-	public void Constructor() {
-		mIntValue = 0;
-	}
+	public int IntValue;
 }
 
 private object Derived extends BaseObject {
-	public string mStringValue;
+	public string StringValue;
 }
 
 private object Replica replicates Derived;
@@ -21,61 +17,67 @@ public void Main(int argc, string args) {
 }
 
 private bool TestCase1() const {
-	print("TestCase 1");
+	print( "TestCase 1" );
 
 	try {
-		BaseObject baseObject = new BaseObject();
-		baseObject.mIntValue = 173;
+		var baseObject = new BaseObject();
+		baseObject.IntValue = 173;
 
-		string jsonString = ToJsonString(baseObject);
-		print("baseObject = " + jsonString);
+		string json = ToJson( baseObject );
+		print( "baseObject = " + json );
 
 		return true;
+	}
+	catch ( string e ) {
+	    print( "Exception: " + e );
 	}
 
 	return false;
 }
 
 private bool TestCase2() const {
-	print("TestCase 2");
+	print( "TestCase 2" );
 
 	try {
-		Derived derived = new Derived();
+		var derived = new Derived();
+		print( "derived = " + ToJson( derived ) );
 
-		string jsonString = "{\"base\":{\"mIntValue\":\"0\"},\"mStringValue\":\"\"}";
+		string json = "{\"StringValue\":\"\",\"base\":{\"IntValue\":0}}";
 
-		bool result = FromJsonString(derived, jsonString);
-		result = result && jsonString == ToJsonString(derived);
+		bool result = FromJson( derived, json );
+		print( json + " == " + ToJson( derived ) );
 
-		print("derived = " + ToJsonString(derived));
-		print(jsonString + " == " + ToJsonString(derived));
-
-		return result;
-
+		return result && json == ToJson( derived );
+	}
+	catch ( string e ) {
+	    print( "Exception: " + e );
 	}
 
 	return false;
 }
 
 private bool TestCase3() const {
-	print("TestCase 3");
+	print( "TestCase 3" );
 
 	try {
-		Replica replica = new Replica();
+		var replica = new Replica();
 
-		string jsonString = "{\"base\":{\"mIntValue\":\"42\"},\"mStringValue\":\"this is a string\"}";
+		string json = "{\"base\":{\"IntValue\":\"42\"},\"StringValue\":\"this is a string\"}";
 
-		bool result = FromJsonString(replica, jsonString);
-		print("result = " + result);
+		bool result = FromJson( replica, json );
+		print( "result = " + result );
 
-		print(jsonString);
-		print(ToJsonString(replica));
+		print( json );
+		print( ToJson( replica ) );
 
-		result = result && jsonString == ToJsonString(replica);
+		result = result && json == ToJson( replica );
 
-		writeln("replica = " + ToJsonString(replica));
+		print( "replica = " + ToJson( replica ) );
 
 		return result;
+	}
+	catch ( string e ) {
+	    print( "Exception: " + e );
 	}
 
 	return false;

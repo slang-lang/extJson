@@ -214,7 +214,7 @@ endfunction()
 function(_handle_post_json target)
 
     _json_check_existence()
-    target_link_libraries(${target} Json)
+    target_link_libraries(${target} jsoncpp)
 
 endfunction()
 

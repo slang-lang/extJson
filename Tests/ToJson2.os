@@ -4,38 +4,38 @@ import System.Exception;
 import System.IO.File;
 
 public object TestObject {
-	public string mName;
-	public int mType;
+	public string Name;
+	public int Type;
 
 	public void Constructor() {
-		mName = "";
-		mType = 0;
+		Name = "";
+		Type = 0;
 	}
 
-	public void Constructor(string name, int type) {
-		mName = name;
-		mType = type;
+	public void Constructor( string name, int type ) {
+		Name = name;
+		Type = type;
 	}
 }
 
 public object DerivedObject extends TestObject {
-	public bool mFlag;
+	public bool Flag;
 
 	public void Constructor() {
 		base.Constructor();
 
-		mFlag = false;
+		Flag = false;
 	}
 
-	public void Constructor(string name, int type, bool flag) {
-		base.Constructor(name, type);
+	public void Constructor( string name, int type, bool flag ) {
+		base.Constructor( name, type );
 
-		mFlag = flag;
+		Flag = flag;
 	}
 }
 
 public object ExtendedObject extends DerivedObject {
-	public float mFloat;
+	public float Float;
 }
 
 public void Main(int argc, string argv) {
@@ -46,80 +46,80 @@ public void Main(int argc, string argv) {
 }
 
 private bool TestCase1() const {
-	print("TestCase 1");
+	print( "TestCase 1" );
 
 	Test_ToJson();
 	Test_FromJson();
 
-	print("");
+	print( "" );
 
 	return true;
 }
 
 private bool TestCase2() const {
-	print("TestCase 2");
+	print( "TestCase 2" );
 
-	TestObject test = new TestObject("MeinName", 1731389);
+	var test = new TestObject( "MeinName", 1731389 );
 
-	string json = ToJsonString(test);
-	print("json = " + json);
+	string json = ToJson( test );
+	print( "json = " + json );
 
-	TestObject obj2 = new TestObject();
-	FromJsonString(obj2, json);
+	var obj2 = new TestObject();
+	FromJson( obj2, json );
 
-	print("obj2={" + obj2.mName + "," + obj2.mType + "}");
+	print( "obj2={" + obj2.Name + "," + obj2.Type + "}" );
 
-	print("");
+	print( "" );
 
 	return true;
 }
 
 private bool TestCase3() const {
-	print("TestCase 3");
+	print( "TestCase 3" );
 
-	Exception ex = new Exception("this is an exception");
+	var ex = new Exception( "this is an exception" );
+	print( ToJson( ex ) );
 
-	print(ToJsonString(ex));
+	var file = new System.IO.File();
+	print( ToJson( file ) );
 
-	System.IO.File file = new System.IO.File();
-	print(ToJsonString(file));
-
-	print("");
+	print( "" );
 
 	return true;
 }
 
 private bool TestCase4() const {
-	print("TestCase 4");
+	print( "TestCase 4" );
 
-	DerivedObject derived = new DerivedObject("derived", 173, true);
+	var derived = new DerivedObject( "derived", 173, true );
 
-	string json = ToJsonString(derived);
-	print("json = " + json);
+	string json = ToJson( derived );
+	print( "json = " + json );
 
-	DerivedObject generated = new DerivedObject();
-	FromJsonString(generated, json);
+	var generated = new DerivedObject();
+	FromJson( generated, json );
 
-	print("generated={" + generated.mName + "," + generated.mType + "," + generated.mFlag + "}");
+	print( "generated={" + generated.Name + "," + generated.Type + "," + generated.Flag + "}" );
 
-	print("");
+	print( "" );
 
 	return true;
 }
 
 private bool Test_FromJson() const {
-	TestObject obj = new TestObject();
-	FromJsonString(obj, "{ \"mName\": \"test\" }");
+	var obj = new TestObject();
 
-	print("obj={" + obj.mName + "," + obj.mType + "}");
+	FromJson( obj, "{ \"Name\": \"test\" }" );
+
+	print( "obj={" + obj.Name + "," + obj.Type + "}" );
 
 	return true;
 }
 
 private bool Test_ToJson() const {
-	TestObject obj = new TestObject("test", 17);
+	var obj = new TestObject( "test", 17 );
 
-	print("ToJson(obj) = " + ToJsonString(obj));
+	print( "ToJson(obj) = " + ToJson( obj ) );
 
 	return true;
 }

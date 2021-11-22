@@ -15,8 +15,9 @@ namespace Json {
 
 
 JsonExtension::JsonExtension()
-: AExtension( "Json", "0.1.0")
+: AExtension( "extJson", "0.1.0" )
 {
+    mName = "extJson (using libjsoncpp " + std::string( JSONCPP_VERSION_STRING ) + ")";
 }
 
 void JsonExtension::initialize( Slang::IScope* /*scope*/ )

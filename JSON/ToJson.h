@@ -4,7 +4,8 @@
 
 
 // Library includes
-#include <Json/Value.h>
+#include <json/value.h>
+#include <json/writer.h>
 
 // Project includes
 #include <Core/Designtime/BuildInTypes/StringObject.h>
@@ -27,7 +28,7 @@ class ToJson : public Slang::Extensions::ExtensionMethod
 {
 public:
 	ToJson()
-	: ExtensionMethod(0, "ToJsonString", Designtime::StringObject::TYPENAME)
+	: ExtensionMethod(0, "ToJson", Designtime::StringObject::TYPENAME)
 	{
 		ParameterList params;
 		params.push_back(Parameter::CreateDesigntime("source", Common::TypeDeclaration(VALUE_NONE)));
@@ -48,11 +49,13 @@ public:
 				throw Runtime::Exceptions::AccessViolation("invalid reference set for 'object'", token.position());
 			}
 
-			::Json::Value value;
+			Json::Value value;
 
-			toJson(param_object, value);
+			toJson( param_object, value );
 
-			*result = Runtime::StringObject(value.toString());
+            Json::FastWriter writer;
+
+			*result = Runtime::StringObject( writer.write( value ) );
 		}
 		catch ( std::exception &e ) {
 			Runtime::Object *data = Controller::Instance().repository()->createInstance(Runtime::StringObject::TYPENAME, ANONYMOUS_OBJECT);
@@ -66,37 +69,39 @@ public:
 	}
 
 private:
-	void toJson(Runtime::Object* object, ::Json::Value& result) const {
+	void toJson( Runtime::Object* object, Json::Value& result ) const {
 		for ( auto it = object->beginSymbols(); it != object->endSymbols(); ++it ) {
 			if ( it->first == IDENTIFIER_THIS || !it->second || it->second->getSymbolType() != Symbol::IType::ObjectSymbol ) {
 				continue;
 			}
 
 			if ( it->first == IDENTIFIER_BASE ) {
-				auto* obj = dynamic_cast<Runtime::Object*>(it->second);
+				auto* obj = dynamic_cast<Runtime::Object*>( it->second );
 				if ( !obj || obj->QualifiedTypename() == _object ) {
+                    // TODO: why would this happen?
 					continue;
 				}
 
-				::Json::Value value;
-				toJson(obj, value);
+				Json::Value value;
+				toJson( obj, value );
 
-				result.addMember(it->first, value);
+                result[ it->first ] = value;
 				continue;
 			}
 
-			auto *obj = dynamic_cast<Runtime::Object*>(it->second);
+			auto *obj = dynamic_cast<Runtime::Object*>( it->second );
 			if ( !obj ) {
+                // TODO: why would this happen?
 				continue;
 			}
 
             switch ( obj->getValue().type() ) {
-                case Slang::Runtime::AtomicValue::Type::BOOL:   result.addMember( it->first, obj->getValue().toBool() ); break;
-                case Slang::Runtime::AtomicValue::Type::DOUBLE: result.addMember( it->first, obj->getValue().toDouble() ); break;
-                case Slang::Runtime::AtomicValue::Type::FLOAT:  result.addMember( it->first, obj->getValue().toFloat() ); break;
-                case Slang::Runtime::AtomicValue::Type::INT:    result.addMember( it->first, obj->getValue().toInt() ); break;
-                case Slang::Runtime::AtomicValue::Type::STRING: result.addMember( it->first, obj->getValue().toStdString() ); break;
-                default: result.addMember( it->first, obj->getValue().toStdString() ); break;
+                case Slang::Runtime::AtomicValue::Type::BOOL:   result[ it->first ] = obj->getValue().toBool(); break;
+                case Slang::Runtime::AtomicValue::Type::DOUBLE: result[ it->first ] = obj->getValue().toDouble(); break;
+                case Slang::Runtime::AtomicValue::Type::FLOAT:  result[ it->first ] = obj->getValue().toFloat(); break;
+                case Slang::Runtime::AtomicValue::Type::INT:    result[ it->first ] = obj->getValue().toInt(); break;
+                case Slang::Runtime::AtomicValue::Type::STRING: result[ it->first ] = obj->getValue().toStdString(); break;
+                default:                                        result[ it->first ] = obj->getValue().toStdString(); break;
             }
 		}
 	}
