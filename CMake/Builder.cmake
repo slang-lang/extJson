@@ -181,31 +181,29 @@ endfunction()
 ### CURL
 ###############################
 
+
 ###############################
 ### JSON
 
 function(_could_not_find_json)
-    MESSAGE(STATUS "Could not find (the correct version of) Json.")
-    MESSAGE(STATUS "Slang currently requires ${JSON_PACKAGE_NAME}\n")
-    MESSAGE(FATAL_ERROR "You can download from ${JSON_DOWNLOAD_URL}")
+    MESSAGE(STATUS "Could not find (the correct version of) JSON.")
+
+    MESSAGE(FATAL_ERROR "Slang currently requires ${JSON_PACKAGE_NAME}\n")
 endfunction()
 
 
 function(_json_check_existence)
 
+    set(JSON_PACKAGE_NAME "jsoncpp")
+
+    find_package(${JSON_PACKAGE_NAME} REQUIRED)
+
     # make sure the appropriate environment variable is set!
-    if(NOT BUILD_JSON_INC)
+    if(NOT JSON_FOUND)
+        MESSAGE( STATUS "JSON_FOUND: ${JSON_FOUND}" )
+        MESSAGE( STATUS "JSON_INCLUDE_DIR: ${JSON_INCLUDE_DIR}" )
+
         _could_not_find_json()
-    else()
-
-        if("${BUILD_JSON_INC}" STREQUAL "")
-            MESSAGE(FATAL_ERROR "BUILD_JSON_INC needed for json!")
-        endif()
-
-        if("${BUILD_JSON_LIB}" STREQUAL "")
-            MESSAGE(FATAL_ERROR "BUILD_JSON_LIB needed for json!")
-        endif()
-
     endif()
 
 endfunction()
@@ -213,8 +211,10 @@ endfunction()
 
 function(_handle_post_json target)
 
+    # for a proper library this also setups any required include directories or other compilation options
     _json_check_existence()
-    target_link_libraries(${target} jsoncpp)
+    include_directories(${JSON_INCLUDE_DIR})
+    target_link_libraries(${target} jsoncpp)	# using jsoncpp
 
 endfunction()
 
