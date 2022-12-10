@@ -19,5 +19,5 @@ endif()
 INCLUDE(CMake/Base.cmake)
 INCLUDE(CMake/Modules/LibFindMacros.cmake)
 
-ADD_SUBDIRECTORY(JSON)
+ADD_SUBDIRECTORY(Extension/JSON)
 
