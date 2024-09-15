@@ -1,23 +1,15 @@
+cmake_minimum_required(VERSION 3.5)
+
 PROJECT(extJson)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMake/Modules/")
-
-cmake_minimum_required(VERSION 3.0)
-
-# cmake policy changes. use "cmake --help-policy <policyid>" for details
-if ( CMAKE_VERSION VERSION_LESS "3.0.0" )
-else()
-    cmake_policy(SET CMP0011 NEW)
-endif()
+SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMake/Modules/")
 
 # verbose makefiles
 #SET(CMAKE_VERBOSE_MAKEFILE ON)
-
 # this helps debugging dependencies - a lot :)
 #SET_PROPERTY(GLOBAL PROPERTY GLOBAL_DEPENDS_DEBUG_MODE 1)
 
-INCLUDE(CMake/Base.cmake)
-INCLUDE(CMake/Modules/LibFindMacros.cmake)
+INCLUDE(${PROJECT_SOURCE_DIR}/CMake/Base.cmake)
+INCLUDE(${PROJECT_SOURCE_DIR}/CMake/Modules/LibFindMacros.cmake)
 
 ADD_SUBDIRECTORY(Extension/JSON)
-

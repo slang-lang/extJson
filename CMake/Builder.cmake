@@ -222,8 +222,8 @@ endfunction()
 function(_handle_pre_json)
 
     _json_check_existence()
-    include_directories(${BUILD_JSON_INC})
-    link_directories(${BUILD_JSON_LIB})
+    include_directories(${JSON_INCLUDE_DIR})
+    link_directories(${JSON_LIBRARY})
 
 endfunction()
 
