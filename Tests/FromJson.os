@@ -22,11 +22,11 @@ private bool TestCase1() const {
 
         string json = "{\"IntValue\":173}";
 /*
-        string json = ToJsonString( baseObject );
+        string json = ToJson( baseObject );
         print( "json = " + json );
 */
 
-        bool result = FromJsonString( baseObject, json );
+        bool result = FromJson( baseObject, json );
         return result && baseObject.IntValue == 173;
 	}
 	catch ( string e ) {
@@ -44,10 +44,10 @@ private bool TestCase2() const {
         derived.IntValue = 42;
         derived.StringValue = "this is a string";
 
-        string json = ToJsonString( derived );
+        string json = ToJson( derived );
         print( "json = " + json );
 
-        bool result = FromJsonString( derived, json );
+        bool result = FromJson( derived, json );
         return result && derived.IntValue == 42;
 	}
 	catch ( string e ) {
