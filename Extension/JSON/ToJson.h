@@ -53,7 +53,7 @@ public:
 
 			toJson( param_object, value );
 
-            Json::FastWriter writer;
+			Json::FastWriter writer;
 
 			*result = Runtime::StringType( writer.write( value ) );
 		}
@@ -78,31 +78,31 @@ private:
 			if ( it->first == IDENTIFIER_BASE ) {
 				auto* obj = dynamic_cast<Runtime::Object*>( it->second );
 				if ( !obj || obj->QualifiedTypename() == _object ) {
-                    // TODO: why would this happen?
+					// TODO: why would this happen?
 					continue;
 				}
 
 				Json::Value value;
 				toJson( obj, value );
 
-                result[ it->first ] = value;
+				result[ it->first ] = value;
 				continue;
 			}
 
 			auto *obj = dynamic_cast<Runtime::Object*>( it->second );
 			if ( !obj ) {
-                // TODO: why would this happen?
+				// TODO: why would this happen?
 				continue;
 			}
 
-            switch ( obj->getValue().type() ) {
-                case Slang::Runtime::AtomicValue::Type::BOOL:   result[ it->first ] = obj->getValue().toBool(); break;
-                case Slang::Runtime::AtomicValue::Type::DOUBLE: result[ it->first ] = obj->getValue().toDouble(); break;
-                case Slang::Runtime::AtomicValue::Type::FLOAT:  result[ it->first ] = obj->getValue().toFloat(); break;
-                case Slang::Runtime::AtomicValue::Type::INT:    result[ it->first ] = obj->getValue().toInt(); break;
-                case Slang::Runtime::AtomicValue::Type::STRING: result[ it->first ] = obj->getValue().toStdString(); break;
-                default:                                        result[ it->first ] = obj->getValue().toStdString(); break;
-            }
+			switch ( obj->getValue().type() ) {
+				case Slang::Runtime::AtomicValue::Type::BOOL:   result[ it->first ] = obj->getValue().toBool(); break;
+				case Slang::Runtime::AtomicValue::Type::DOUBLE: result[ it->first ] = obj->getValue().toDouble(); break;
+				case Slang::Runtime::AtomicValue::Type::FLOAT:  result[ it->first ] = obj->getValue().toFloat(); break;
+				case Slang::Runtime::AtomicValue::Type::INT:    result[ it->first ] = static_cast<Int64>( obj->getValue().toInt() ); break;
+				case Slang::Runtime::AtomicValue::Type::STRING: result[ it->first ] = obj->getValue().toStdString(); break;
+				default:                                        result[ it->first ] = obj->getValue().toStdString(); break;
+			}
 		}
 	}
 };
