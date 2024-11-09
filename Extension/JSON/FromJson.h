@@ -8,11 +8,11 @@
 #include <json/value.h>
 
 // Project includes
-#include <Core/Designtime/BuildInTypes/BoolObject.h>
-#include <Core/Designtime/BuildInTypes/StringObject.h>
+#include <Core/Designtime/BuildInTypes/BoolType.h>
+#include <Core/Designtime/BuildInTypes/StringType.h>
 #include <Core/Extensions/ExtensionMethod.h>
-#include <Core/Runtime/BuildInTypes/BoolObject.h>
-#include <Core/Runtime/BuildInTypes/StringObject.h>
+#include <Core/Runtime/BuildInTypes/BoolType.h>
+#include <Core/Runtime/BuildInTypes/StringType.h>
 #include <Core/Runtime/Exceptions.h>
 #include <Core/Tools.h>
 #include <Core/VirtualMachine/Controller.h>
@@ -30,11 +30,11 @@ class FromJson : public Slang::Extensions::ExtensionMethod
 {
 public:
 	FromJson()
-	: ExtensionMethod(0, "FromJson", Designtime::BoolObject::TYPENAME)
+	: ExtensionMethod(0, "FromJson", Designtime::BoolType::TYPENAME)
 	{
 		ParameterList params;
 		params.push_back(Parameter::CreateDesigntime("object", Common::TypeDeclaration(_any)));
-		params.push_back(Parameter::CreateDesigntime("value", Common::TypeDeclaration(Designtime::StringObject::TYPENAME)));
+		params.push_back(Parameter::CreateDesigntime("value", Common::TypeDeclaration(Designtime::StringType::TYPENAME)));
 
 		setSignature(params);
 	}
@@ -60,11 +60,11 @@ public:
 
 			bool success = fromJson( root, param_object );
 
-			*result = Runtime::BoolObject( success );
+			*result = Runtime::BoolType( success );
 		}
 		catch ( std::exception &e ) {
-			Runtime::Object *data = Controller::Instance().repository()->createInstance(Runtime::StringObject::TYPENAME, ANONYMOUS_OBJECT);
-			*data = Runtime::StringObject(std::string(e.what()));
+			Runtime::Object *data = Controller::Instance().repository()->createInstance(Runtime::StringType::TYPENAME, ANONYMOUS_OBJECT);
+			*data = Runtime::StringType(std::string(e.what()));
 
 			Controller::Instance().thread(threadId)->exception() = Runtime::ExceptionData(data, token.position());
 			return Runtime::ControlFlow::Throw;
