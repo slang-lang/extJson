@@ -5,3 +5,4 @@ SET( BUILD_SLANG_LIB "/path/to/your/slang/directory/build/lib" )
 # JSON library includes
 SET( JSON_INCLUDE_DIR "/path/to/your/json-library/include" )
 SET( JSON_LIBRARY "/path/to/your/json-library/lib" )
+
