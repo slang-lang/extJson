@@ -16,17 +16,17 @@
 #include <Core/Runtime/Exceptions.h>
 #include <Core/Tools.h>
 #include <Core/VirtualMachine/Controller.h>
+#include "Defines.h"
 
 // Forward declarations
 
 // Namespace declarations
-using namespace Slang;
 
 
 namespace Json {
 
 
-class FromJson : public Slang::Extensions::ExtensionMethod
+class FromJson : public Extensions::ExtensionMethod
 {
 public:
 	FromJson()
@@ -47,7 +47,7 @@ public:
 		try {
 			ParameterList::const_iterator it = list.begin();
 
-			Runtime::Object* param_object = Controller::Instance().memory()->get((*it++).reference());
+			auto* param_object = Controller::Instance().memory()->get((*it++).reference());
 			if ( !param_object ) {
 				throw Runtime::Exceptions::AccessViolation("invalid reference set for 'object'", token.position());
 			}
@@ -63,7 +63,7 @@ public:
 			*result = Runtime::BoolType( success );
 		}
 		catch ( std::exception &e ) {
-			Runtime::Object *data = Controller::Instance().repository()->createInstance(Runtime::StringType::TYPENAME, ANONYMOUS_OBJECT);
+			auto* data = Controller::Instance().repository()->createInstance(Runtime::StringType::TYPENAME, ANONYMOUS_OBJECT);
 			*data = Runtime::StringType(std::string(e.what()));
 
 			Controller::Instance().thread(threadId)->exception() = Runtime::ExceptionData(data, token.position());

@@ -1,6 +1,6 @@
 
 // Header
-#include "JsonExtension.h"
+#include "Extension.h"
 
 // Library includes
 
@@ -15,18 +15,18 @@
 namespace Json {
 
 
-JsonExtension::JsonExtension()
-: AExtension( "extJson", "0.2.1" )
+Extension::Extension()
+: Extensions::AExtension( "extJson", "0.2.2" )
 {
     mName = "extJson (using libjsoncpp " + std::string( JSONCPP_VERSION_STRING ) + ")";
 }
 
-void JsonExtension::initialize( Slang::Extensions::ExtensionNamespace* /*scope*/ )
+void Extension::initialize( Extensions::ExtensionNamespace* /*scope*/ )
 {
     // nothing to do here
 }
 
-void JsonExtension::provideMethods( Slang::Extensions::ExtensionMethods& methods )
+void Extension::provideMethods( Extensions::ExtensionMethods& methods )
 {
     assert( methods.empty() );
 
@@ -39,7 +39,6 @@ void JsonExtension::provideMethods( Slang::Extensions::ExtensionMethods& methods
 }
 
 
-extern "C" Slang::Extensions::AExtension* factory( void ) {
-	return dynamic_cast<Slang::Extensions::AExtension*>( new Json::JsonExtension() );
+extern "C" Extensions::AExtension* factory( void ) {
+	return dynamic_cast<Extensions::AExtension*>( new Json::Extension() );
 }
-

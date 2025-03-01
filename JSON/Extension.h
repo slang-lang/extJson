@@ -7,6 +7,7 @@
 
 // Project includes
 #include <Core/Extensions/AExtension.h>
+#include "Defines.h"
 
 // Forward declarations
 
@@ -16,14 +17,15 @@
 namespace Json {
 
 
-class JsonExtension : public Slang::Extensions::AExtension
+class Extension : public Extensions::AExtension
 {
 public:
-	JsonExtension();
+	Extension();
+	~Extension() = default;
 
 public:
-	void initialize( Slang::Extensions::ExtensionNamespace* scope );
-	void provideMethods( Slang::Extensions::ExtensionMethods& methods );
+	void initialize( Extensions::ExtensionNamespace* scope );
+	void provideMethods( Extensions::ExtensionMethods& methods );
 };
 
 

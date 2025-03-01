@@ -1,14 +1,15 @@
 INCLUDE(${PROJECT_SOURCE_DIR}/CMake/Base.cmake)
 
 SET(SOURCES
-        JsonExtension.cpp
+    Extension.cpp
 )
 
 SET(HEADERS
-        FromJson.h
-        JsonEncode.h
-        JsonExtension.h
-        ToJson.h
+    Defines.h
+    Extension.h
+    FromJson.h
+    JsonEncode.h
+    ToJson.h
 )
 
 SET(DEPENDENCIES

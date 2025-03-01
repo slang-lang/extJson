@@ -14,17 +14,17 @@
 #include <Core/Runtime/Exceptions.h>
 #include <Core/Tools.h>
 #include <Core/VirtualMachine/Controller.h>
+#include "Defines.h"
 
 // Forward declarations
 
 // Namespace declarations
-using namespace Slang;
 
 
 namespace Json {
 
 
-class JsonEncode : public Slang::Extensions::ExtensionMethod
+class JsonEncode : public Extensions::ExtensionMethod
 {
 public:
     JsonEncode()
@@ -55,7 +55,7 @@ public:
             parse( root, result );
 		}
 		catch ( std::exception &e ) {
-			Runtime::Object *data = Controller::Instance().repository()->createInstance(Runtime::StringType::TYPENAME, ANONYMOUS_OBJECT);
+			auto* data = Controller::Instance().repository()->createInstance(Runtime::StringType::TYPENAME, ANONYMOUS_OBJECT);
 			*data = Runtime::StringType(std::string(e.what()));
 
 			Controller::Instance().thread(threadId)->exception() = Runtime::ExceptionData(data, token.position());
