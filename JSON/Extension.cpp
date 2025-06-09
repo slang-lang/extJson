@@ -16,14 +16,14 @@ namespace Json {
 
 
 Extension::Extension()
-: Extensions::AExtension( "extJson", "0.2.2" )
+: Extensions::AExtension( "extJson", "0.2.3" )
 {
     mName = "extJson (using libjsoncpp " + std::string( JSONCPP_VERSION_STRING ) + ")";
 }
 
-void Extension::initialize( Extensions::ExtensionNamespace* /*scope*/ )
+void Extension::initialize( Extensions::ExtensionNamespace* scope )
 {
-    // nothing to do here
+    (void) scope;
 }
 
 void Extension::provideMethods( Extensions::ExtensionMethods& methods )
