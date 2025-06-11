@@ -16,7 +16,7 @@ namespace Json {
 
 
 Extension::Extension()
-: Extensions::AExtension( "extJson", "0.2.3" )
+: Extensions::AExtension( "extJson", "0.3.0" )
 {
     mName = "extJson (using libjsoncpp " + std::string( JSONCPP_VERSION_STRING ) + ")";
 }
