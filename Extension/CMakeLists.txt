@@ -13,7 +13,7 @@ SET(HEADERS
 )
 
 SET(DEPENDENCIES
-	CoreExtensions
+	Core
 )
 
 SET(MODULES
